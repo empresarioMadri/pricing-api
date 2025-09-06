@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Valida mensajes de commit con Conventional Commits.
+# Instalación local (una vez):  git config core.hooksPath .githooks
+
+FILE="$1"
+
+# tipos permitidos + scope opcional + ! opcional + descripción
+PATTERN='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9_.-]+\))?!?: .{1,}'
+
+if ! grep -E -q "$PATTERN" "$FILE"; then
+  echo "⛔  Mensaje de commit inválido."
+  echo "    Debe seguir Conventional Commits:"
+  echo "    <type>(<scope>)?: <description>"
+  echo "    Ejemplos:"
+  echo "      feat(api): add GET /api/v1/prices"
+  echo "      fix(infra)!: change schema and reindex"
+  exit 1
+fi
+
+exit 0

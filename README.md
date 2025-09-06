@@ -54,7 +54,7 @@ curl "http://localhost:8080/api/v1/prices?applicationDate=2020-06-14T10:00:00&pr
 ```
 
 ## 🗃️ Datos y persistencia
-- **H2** en memoria. Consola: `http://localhost:8080/h2-console`  
+- **H2** en memoria. Consola: `http://localhost:8080/h2-console`
   JDBC URL: `jdbc:h2:mem:pricingdb` · usuario: `sa` · sin password
 - Índice compuesto recomendado: `(PRODUCT_ID, BRAND_ID, START_DATE, END_DATE, PRIORITY)`
 - Selección eficiente con método derivado Spring Data: `findTop…OrderByPriorityDesc`
@@ -133,12 +133,26 @@ jobs:
 - Naming consistente y responsabilidades de capa claras.
 
 ## 🧰 IDE y Lombok
-- Activa **annotation processing** en tu IDE.  
+- Activa **annotation processing** en tu IDE.
   IntelliJ IDEA → *Settings → Build, Execution, Deployment → Compiler → Annotation Processors* → ✅ Enable
 
 ## 🧪 Troubleshooting rápido
 - **Lombok no genera código**: verifica `annotation processing` y que Lombok está como *annotation processor* en `maven-compiler-plugin`.
 - **MockMvc = null** en tests: añade `@SpringBootTest(webEnvironment=MOCK)` + `@AutoConfigureMockMvc` y usa `@Autowired MockMvc`.
+
+## 🧭 Estándares de control de versiones
+
+- **Conventional Commits** en todos los mensajes:
+  - Formato: `<type>(<scope>)?: <description>`
+  - Tipos: `feat`, `fix`, `chore`, `ci`, `docs`, `refactor`, `test`, `build`, `perf`, `style`, `revert`
+  - Ejemplos:
+    - `feat(api): expose GET /api/v1/prices`
+    - `fix(persistence)!: change schema and reindex`
+    - `test(web): add 5 sample cases and 422 checks`
+- **Hook local** para validar commits:
+  ```bash
+  git config core.hooksPath .githooks
+  chmod +x .githooks/commit-msg
 
 ## 📜 Licencia
 MIT. Ver `LICENSE`.
