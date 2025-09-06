@@ -48,10 +48,10 @@
     <module name="JavadocMethod">
       <!-- En 10.x se usa accessModifiers (no 'scope') -->
       <property name="accessModifiers" value="public, protected, package, private"/>
-      <property name="allowMissingJavadoc" value="true"/>
       <property name="allowMissingParamTags" value="true"/>
       <property name="allowMissingReturnTag" value="true"/>
     </module>
+
 
 
 
