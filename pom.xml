@@ -64,7 +64,38 @@
   </dependencies>
 
   <build>
+    <resources>
+      <!-- Bloque NO filtrado para config -->
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.yml</include>
+          <include>**/*.yaml</include>
+        </includes>
+      </resource>
+
+      <!-- (Opcional) Bloque filtrado SOLO para plantillas que realmente lo necesiten -->
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <excludes>
+          <exclude>**/*.properties</exclude>
+          <exclude>**/*.yml</exclude>
+          <exclude>**/*.yaml</exclude>
+        </excludes>
+      </resource>
+    </resources>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
       <!-- Enforcer: versiones y convergencia -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
