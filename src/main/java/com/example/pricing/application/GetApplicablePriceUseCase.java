@@ -1,8 +1,8 @@
 package com.example.pricing.application;
 
+import com.example.pricing.application.exception.PriceNotFoundException;
 import com.example.pricing.domain.model.Price;
 import com.example.pricing.domain.ports.PriceRepositoryPort;
-import com.example.pricing.infrastructure.web.error.PriceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
