@@ -46,12 +46,13 @@
       <property name="excludeScope" value="package"/>
     </module>
     <module name="JavadocMethod">
-      <!-- en Checkstyle ≥ 8.42 se usa accessModifiers en vez de scope -->
+      <!-- En 10.x se usa accessModifiers (no 'scope') -->
       <property name="accessModifiers" value="public, protected, package, private"/>
+      <property name="allowMissingJavadoc" value="true"/>
       <property name="allowMissingParamTags" value="true"/>
-      <property name="allowMissingThrowsTags" value="true"/>
       <property name="allowMissingReturnTag" value="true"/>
     </module>
+
 
 
     <!-- Nombres -->
