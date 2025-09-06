@@ -12,17 +12,19 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class PriceJpaRepositoryIT {
 
-    @Autowired private PriceJpaRepository repo;
+  @Autowired private PriceJpaRepository repo;
 
-    @Test
-    void recupera_top_priority_en_rango() {
-        LocalDateTime at = LocalDateTime.parse("2020-06-14T16:00:00");
+  @Test
+  void recupera_top_priority_en_rango() {
+    LocalDateTime at = LocalDateTime.parse("2020-06-14T16:00:00");
 
-        PriceEntity e = repo.findTopByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanOrderByPriorityDesc(
+    PriceEntity e =
+        repo
+            .findTopByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanOrderByPriorityDesc(
                 35455L, 1, at, at);
 
-        assertThat(e).isNotNull();
-        assertThat(e.getPriceList()).isEqualTo(2);
-        assertThat(e.getPrice()).isNotNull();
-    }
+    assertThat(e).isNotNull();
+    assertThat(e.getPriceList()).isEqualTo(2);
+    assertThat(e.getPrice()).isNotNull();
+  }
 }

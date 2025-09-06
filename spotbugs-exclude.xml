@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <!-- JPA entities suelen disparar falsos positivos de serialización/visibilidad -->
+  <Match>
+    <Package name="com.example.pricing.infrastructure.persistence"/>
+  </Match>
+  <!-- Tests tampoco nos interesan para bug patterns -->
+  <Match>
+    <Package name="com.example.pricing.*.web"/>
+    <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"/>
+  </Match>
+</FindBugsFilter>

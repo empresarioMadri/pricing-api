@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+  "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+  "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+<suppressions>
+  <!-- Tests: permitir números mágicos y ausencia de javadoc -->
+  <suppress files="src/test/java/.*" checks="MagicNumber"/>
+  <suppress files="src/test/java/.*" checks="Javadoc.*"/>
+
+  <!-- Entidades JPA: campos mutables por diseño -->
+  <suppress files="src/main/java/com/example/pricing/infrastructure/persistence/.*" checks="MemberName"/>
+  <suppress files="src/main/java/com/example/pricing/infrastructure/persistence/.*" checks="MissingJavadocType"/>
+  <suppress files="src/main/java/com/example/pricing/infrastructure/persistence/.*" checks="Javadoc.*"/>
+
+  <!-- Records/DTOs -->
+  <suppress files="src/main/java/com/example/pricing/infrastructure/web/dto/.*" checks="Javadoc.*"/>
+</suppressions>

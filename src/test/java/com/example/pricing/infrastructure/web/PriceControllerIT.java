@@ -17,32 +17,33 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 class PriceControllerIT {
 
-    @Autowired private MockMvc mockMvc;
+  @Autowired private MockMvc mockMvc;
 
-    static Stream<Arguments> casos() {
-        return Stream.of(
-                Arguments.of("2020-06-14T10:00:00", 1, 35.50),
-                Arguments.of("2020-06-14T16:00:00", 2, 25.45),
-                Arguments.of("2020-06-14T21:00:00", 1, 35.50),
-                Arguments.of("2020-06-15T10:00:00", 3, 30.50),
-                Arguments.of("2020-06-16T21:00:00", 4, 38.95)
-        );
-    }
+  static Stream<Arguments> casos() {
+    return Stream.of(
+        Arguments.of("2020-06-14T10:00:00", 1, 35.50),
+        Arguments.of("2020-06-14T16:00:00", 2, 25.45),
+        Arguments.of("2020-06-14T21:00:00", 1, 35.50),
+        Arguments.of("2020-06-15T10:00:00", 3, 30.50),
+        Arguments.of("2020-06-16T21:00:00", 4, 38.95));
+  }
 
-    @ParameterizedTest
-    @MethodSource("casos")
-    void contrato_ok(String applicationDate, int priceList, double price) throws Exception {
-        mockMvc.perform(get("/api/v1/prices")
-                        .queryParam("applicationDate", applicationDate)
-                        .queryParam("productId", "35455")
-                        .queryParam("brandId", "1")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.productId").value(35455))
-                .andExpect(jsonPath("$.brandId").value(1))
-                .andExpect(jsonPath("$.priceList").value(priceList))
-                // JSON puede serializar 35.50 como 35.5 -> usamos tolerancia
-                .andExpect(jsonPath("$.finalPrice").value(closeTo(price, 0.001)))
-                .andExpect(jsonPath("$.currency").value("EUR"));
-    }
+  @ParameterizedTest
+  @MethodSource("casos")
+  void contrato_ok(String applicationDate, int priceList, double price) throws Exception {
+    mockMvc
+        .perform(
+            get("/api/v1/prices")
+                .queryParam("applicationDate", applicationDate)
+                .queryParam("productId", "35455")
+                .queryParam("brandId", "1")
+                .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.productId").value(35455))
+        .andExpect(jsonPath("$.brandId").value(1))
+        .andExpect(jsonPath("$.priceList").value(priceList))
+        // JSON puede serializar 35.50 como 35.5 -> usamos tolerancia
+        .andExpect(jsonPath("$.finalPrice").value(closeTo(price, 0.001)))
+        .andExpect(jsonPath("$.currency").value("EUR"));
+  }
 }
