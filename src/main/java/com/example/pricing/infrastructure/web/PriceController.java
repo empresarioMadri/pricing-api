@@ -1,6 +1,7 @@
 package com.example.pricing.infrastructure.web;
 
-import com.example.pricing.application.PricingService;
+import com.example.pricing.application.GetApplicablePriceUseCase;
+import com.example.pricing.domain.model.Price;
 import com.example.pricing.infrastructure.web.dto.PriceResponse;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -18,20 +19,27 @@ import java.time.LocalDateTime;
 @Validated
 public class PriceController {
 
-    private final PricingService service;
+    private final GetApplicablePriceUseCase useCase;
 
-    public PriceController(PricingService service) {
-        this.service = service;
+    public PriceController(GetApplicablePriceUseCase useCase) {
+        this.useCase = useCase;
     }
 
     @GetMapping
     public PriceResponse getPrice(
-            @RequestParam
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            @NotNull LocalDateTime applicationDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @NotNull LocalDateTime applicationDate,
             @RequestParam @Min(1) long productId,
             @RequestParam @Min(1) int brandId
     ) {
-        return service.getApplicablePrice(applicationDate, productId, brandId);
+        Price p = useCase.execute(applicationDate, productId, brandId);
+        return new PriceResponse(
+                p.getProductId(),
+                p.getBrandId(),
+                p.getPriceList(),
+                p.getStartDate(),
+                p.getEndDate(),
+                p.getAmount(),
+                p.getCurrency().name()
+        );
     }
 }
